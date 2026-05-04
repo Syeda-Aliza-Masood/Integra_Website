@@ -1,4 +1,4 @@
-// app/page.tsx - Only Commercial Services section updated
+// app/page.tsx - Complete fixed code (unused imports removed)
 
 "use client";
 
@@ -6,14 +6,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { 
-  ArrowRight, Briefcase, Building, Lightbulb, Zap, 
-  CheckCircle, Clock, MessageSquare, 
-  ClipboardList, Building2, Store, HomeIcon,
-  Wrench, AlertTriangle, Settings  // Added for new commercial section
+  ArrowRight, Building, Lightbulb, Zap, 
+  CheckCircle, 
+  ClipboardList, Building2, HomeIcon,
+  Wrench, AlertTriangle, Settings
 } from "lucide-react";
 
 // ============================================
-// SECTION 1: HERO (Same as before)
+// SECTION 1: HERO
 // ============================================
 function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -50,7 +50,7 @@ function Hero() {
 }
 
 // ============================================
-// SECTION 2: COMMERCIAL SERVICES (UPDATED - More Professional)
+// SECTION 2: COMMERCIAL SERVICES (Professional)
 // ============================================
 function CommercialServices() {
   const services = [
@@ -95,7 +95,7 @@ function CommercialServices() {
 }
 
 // ============================================
-// SECTION 3: BUILT FOR GCs (Same as before)
+// SECTION 3: BUILT FOR GCs
 // ============================================
 function BuiltForGCs() {
   const features = [
@@ -123,7 +123,7 @@ function BuiltForGCs() {
 }
 
 // ============================================
-// SECTION 4: PROJECT SPOTLIGHTS (Same as before)
+// SECTION 4: PROJECT SPOTLIGHTS
 // ============================================
 function ProjectSpotlights() {
   const projects = [
@@ -200,7 +200,7 @@ function ProjectSpotlights() {
 }
 
 // ============================================
-// SECTION 5: WHO WE WORK WITH (Same as before)
+// SECTION 5: WHO WE WORK WITH
 // ============================================
 function WhoWeWorkWith() {
   const audiences = [
@@ -235,7 +235,7 @@ function WhoWeWorkWith() {
 }
 
 // ============================================
-// SECTION 6: RESIDENTIAL (Same as before)
+// SECTION 6: RESIDENTIAL
 // ============================================
 function ResidentialSecondary() {
   return (
@@ -281,7 +281,7 @@ function ResidentialSecondary() {
 }
 
 // ============================================
-// SECTION 7: FINAL CTA (Same as before)
+// SECTION 7: FINAL CTA
 // ============================================
 function FinalCTA() {
   return (
