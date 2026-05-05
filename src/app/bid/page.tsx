@@ -1,4 +1,4 @@
-// app/bid/page.tsx - Request a Bid Form (PDF Page 9)
+// app/bid/page.tsx - Fixed
 
 "use client";
 
@@ -23,9 +23,9 @@ export default function BidPage() {
     projectType: '',
     projectLocation: '',
     timeline: '',
-    message: '',
-    file: null
+    message: ''
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);  // ← Separate state for file
 
   useEffect(() => {
     setIsLoaded(true);
@@ -38,7 +38,7 @@ export default function BidPage() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, file: e.target.files[0] });
+      setSelectedFile(e.target.files[0]);  // ← Fixed
     }
   };
 
@@ -47,7 +47,7 @@ export default function BidPage() {
     setIsSubmitting(true);
     // Simulate form submission
     setTimeout(() => {
-      console.log('Form submitted:', formData);
+      console.log('Form submitted:', { ...formData, file: selectedFile });
       alert('Thank you! We will respond within 24 hours.');
       setIsSubmitting(false);
       setFormData({
@@ -58,18 +58,16 @@ export default function BidPage() {
         projectType: '',
         projectLocation: '',
         timeline: '',
-        message: '',
-        file: null
+        message: ''
       });
+      setSelectedFile(null);
     }, 1000);
   };
 
   return (
     <main className="bg-white">
       
-      {/* ============================================ */}
       {/* HERO SECTION */}
-      {/* ============================================ */}
       <section className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white py-20">
         <div className="absolute inset-0 bg-black/50 bg-[url('/hero.jpg')] bg-cover bg-center opacity-20"></div>
         <div className="relative mx-auto max-w-7xl px-4">
@@ -89,9 +87,7 @@ export default function BidPage() {
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* TRUST BUILDERS - PDF Page 9 */}
-      {/* ============================================ */}
+      {/* TRUST BUILDERS */}
       <section className="py-8 bg-white border-b border-gray-200">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex flex-wrap justify-center gap-6">
@@ -115,14 +111,12 @@ export default function BidPage() {
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* FORM + CONTACT SECTION - PDF Page 9 */}
-      {/* ============================================ */}
+      {/* FORM + CONTACT SECTION */}
       <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4">
           <div className="grid lg:grid-cols-3 gap-10">
             
-            {/* Left Side - Contact Info & Trust Builders */}
+            {/* Left Side - Contact Info */}
             <div className="lg:col-span-1">
               <div className="sticky top-24">
                 <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
@@ -182,24 +176,11 @@ export default function BidPage() {
                       <span>Clear Communication</span>
                     </li>
                   </ul>
-                  <div className="mt-6 pt-6 border-t border-white/20">
-                    <div className="flex items-center gap-2">
-                      <Star size={16} className="text-yellow-400 fill-yellow-400" />
-                      <Star size={16} className="text-yellow-400 fill-yellow-400" />
-                      <Star size={16} className="text-yellow-400 fill-yellow-400" />
-                      <Star size={16} className="text-yellow-400 fill-yellow-400" />
-                      <Star size={16} className="text-yellow-400 fill-yellow-400" />
-                      <span className="text-sm ml-2">(50+ reviews)</span>
-                    </div>
-                    <a href="#" className="inline-block mt-3 text-sm text-blue-200 hover:text-white transition">
-                      Read our Google reviews →
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Side - Request a Bid Form */}
+            {/* Right Side - Form */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-2xl shadow-xl p-8">
                 <div className="mb-6">
@@ -208,150 +189,126 @@ export default function BidPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Name & Company */}
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Full Name <span className="text-red-500">*</span>
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
                       <input
                         type="text"
                         name="name"
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-gray-50"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
                         placeholder="John Smith"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Company Name
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Company Name</label>
                       <input
                         type="text"
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-gray-50"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
                         placeholder="ABC Construction"
                       />
                     </div>
                   </div>
 
-                  {/* Phone & Email */}
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Phone Number <span className="text-red-500">*</span>
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
                       <input
                         type="tel"
                         name="phone"
                         required
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-gray-50"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
                         placeholder="(832) 790-2845"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
                       <input
                         type="email"
                         name="email"
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-gray-50"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
                         placeholder="john@company.com"
                       />
                     </div>
                   </div>
 
-                  {/* Project Type Dropdown */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Project Type <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      name="projectType"
-                      required
-                      value={formData.projectType}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                    >
-                      <option value="">Select Project Type</option>
-                      <option value="Tenant Build-Out">Tenant Build-Out</option>
-                      <option value="Commercial Electrical">Commercial Electrical</option>
-                      <option value="Service Upgrade">Service Upgrade</option>
-                      <option value="Lighting">Lighting Installation</option>
-                      <option value="Troubleshooting">Troubleshooting</option>
-                      <option value="Maintenance">Maintenance</option>
-                      <option value="Residential Remodel">Residential Remodel</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-
-                  {/* Project Location & Timeline */}
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Project Location
-                      </label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Project Type *</label>
+                      <select
+                        name="projectType"
+                        required
+                        value={formData.projectType}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                      >
+                        <option value="">Select Project Type</option>
+                        <option value="Tenant Build-Out">Tenant Build-Out</option>
+                        <option value="Commercial Electrical">Commercial Electrical</option>
+                        <option value="Service Upgrade">Service Upgrade</option>
+                        <option value="Lighting">Lighting Installation</option>
+                        <option value="Troubleshooting">Troubleshooting</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Residential Remodel">Residential Remodel</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Project Location</label>
                       <input
                         type="text"
                         name="projectLocation"
                         value={formData.projectLocation}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 transition bg-gray-50"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
                         placeholder="Houston, TX"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Timeline
-                      </label>
-                      <select
-                        name="timeline"
-                        value={formData.timeline}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
-                      >
-                        <option value="">Select Timeline</option>
-                        <option value="Immediate (within 2 weeks)">Immediate (within 2 weeks)</option>
-                        <option value="Short-term (1 month)">Short-term (1 month)</option>
-                        <option value="Medium-term (2-3 months)">Medium-term (2-3 months)</option>
-                        <option value="Long-term (3+ months)">Long-term (3+ months)</option>
-                        <option value="Planning stage only">Planning stage only</option>
-                      </select>
-                    </div>
                   </div>
 
-                  {/* Message / Scope Details */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Project Details / Scope <span className="text-red-500">*</span>
-                    </label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Timeline</label>
+                    <select
+                      name="timeline"
+                      value={formData.timeline}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                    >
+                      <option value="">Select Timeline</option>
+                      <option value="Immediate (within 2 weeks)">Immediate (within 2 weeks)</option>
+                      <option value="Short-term (1 month)">Short-term (1 month)</option>
+                      <option value="Medium-term (2-3 months)">Medium-term (2-3 months)</option>
+                      <option value="Long-term (3+ months)">Long-term (3+ months)</option>
+                      <option value="Planning stage only">Planning stage only</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Project Details / Scope *</label>
                     <textarea
                       name="message"
                       required
-                      rows={5}
+                      rows={4}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 transition bg-gray-50"
-                      placeholder="Please describe your project, scope of work, or any specific requirements..."
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                      placeholder="Describe your project, scope, or any specific requirements..."
                     ></textarea>
                   </div>
 
-                  {/* Upload Plans/Photos - PDF Page 9 */}
                   <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-400 hover:bg-blue-50 transition cursor-pointer group">
                     <Upload size={32} className="mx-auto text-gray-400 group-hover:text-blue-500 transition mb-3" />
-                    <p className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition">
-                      Upload plans, photos, or project documents
-                    </p>
+                    <p className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition">Click to upload plans, photos, or documents</p>
                     <p className="text-xs text-gray-400 mt-1">PDF, JPG, PNG, DWG up to 10MB</p>
                     <input 
                       type="file" 
@@ -366,14 +323,13 @@ export default function BidPage() {
                     >
                       Browse files →
                     </label>
-                    {formData.file && (
+                    {selectedFile && (
                       <p className="text-xs text-green-600 mt-2">
-                        ✓ {formData.file.name} uploaded
+                        ✓ {selectedFile.name} uploaded
                       </p>
                     )}
                   </div>
 
-                  {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -396,9 +352,7 @@ export default function BidPage() {
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* CTA BANNER - PDF Page 9 */}
-      {/* ============================================ */}
+      {/* CTA BANNER */}
       <section className="py-16 bg-gradient-to-r from-blue-700 to-blue-800 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Need a Quote Fast?</h2>
