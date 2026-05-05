@@ -1,7 +1,7 @@
 // next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: 'build',  // ← .next ki jagah 'build' folder use karega
+  // No distDir - let Next.js use default .next folder
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -11,6 +11,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  output: 'standalone', // For Vercel deployment
 }
 
 module.exports = nextConfig
