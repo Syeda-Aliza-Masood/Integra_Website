@@ -1,9 +1,10 @@
-// components/Navbar.tsx
+// components/Navbar.tsx - Only Logo (No Text)
 
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 
 const navigation = [
@@ -36,15 +37,18 @@ export default function Navbar() {
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          {/* Logo with subtitle below */}
+          {/* Only Logo - No Text */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex flex-col items-start">
-              <span className="text-2xl font-bold text-blue-900">
-                INTEGRA<span className="text-blue-600">⚡</span>
-              </span>
-              <span className="text-xs font-medium text-gray-500 mt-0.5">
-                Electric & Construction
-              </span>
+            <Link href="/" className="flex items-center">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40">
+                <Image
+                  src="/logo.1.jpg"
+                  alt="Integra Electric & Construction Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </Link>
           </div>
 
